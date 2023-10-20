@@ -1,0 +1,14 @@
+version: '3.5'
+services:
+  bastion-{{ item.name }}:
+    build: .
+    environment:
+      USERS: "{{ item.name }}"
+    ports:
+      - "{{ item.port }}:22"
+    volumes:
+      - /var/log/bastion/{{ item.name }}:/var/log/bastion/{{ item.name }}
+      - bastion-{{ item.name }}:/home/{{ item.name }}
+      - /opt/bastion/sshpiper/id_rsa.pub:/etc/authorized-keys:ro
+volumes:
+  bastion-{{ item.name }}:

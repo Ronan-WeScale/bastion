@@ -1,0 +1,10 @@
+---
+- name: Init bastion host
+  hosts: "bastion"
+  become: true
+  gather_facts: true
+
+  roles:
+    - system
+    - docker
+    - bastion

@@ -1,0 +1,5 @@
+bastion.*                  -/var/log/bastion/*/*.log
+
+ruleset(name="RemoteLogProcess") {
+    *.bastion action(type="omfwd" protocol="tcp" target="{{ target }}" port="1515" Template="RSYSLOG_SyslogProtocol23Format" TCP_Framing="octet-counted" KeepAlive="on") 
+}

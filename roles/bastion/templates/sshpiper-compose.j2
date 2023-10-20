@@ -1,0 +1,10 @@
+version: '3.5'
+services:
+  sshpiper:
+    image: farmer1992/sshpiperd:full-1.2.3
+    environment:
+      SSHPIPERD_YAML_CONFIG: "/var/sshpiper/sshpiper.yaml"
+    ports:
+      - "2222:2222"
+    volumes:
+      - /opt/bastion/sshpiper/:/var/sshpiper/

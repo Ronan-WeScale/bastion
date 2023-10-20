@@ -1,0 +1,12 @@
+---
+- name: User tasks
+  include_tasks: users.yml
+  tags: 
+    - addadmin
+    - deladmin
+    - updatekey
+
+- name: Rsyslog tasks
+  include_tasks: rsyslog.yml
+  tags: 
+    - rsyslog

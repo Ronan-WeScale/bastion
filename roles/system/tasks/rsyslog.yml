@@ -1,0 +1,21 @@
+---
+- name: Install Rsyslog
+  ansible.builtin.apt:
+    name: rsyslog
+    state: present
+
+- name: Configure Rsyslog
+  ansible.builtin.template:
+    src: "bastion.conf.j2"
+    dest: /etc/rsyslog.d/bastion.conf
+    owner: root
+    group: root
+    mode: '0644'
+  notify:
+    - Restart rsyslog
+
+- name: Ensure rsyslog is running
+  ansible.builtin.service:
+    name: rsyslog
+    enabled: true
+    state: started

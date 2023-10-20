@@ -2,13 +2,13 @@
 - name: Restart unit
   ansible.builtin.systemd:
     name: "docker-compose@{{ item.name }}"
-    enbale: true
+    enable: true
     state: restarted
 
-- name: Restart unit
+- name: Restart sshpiper
   ansible.builtin.systemd:
     name: docker-compose@sshpiper
-    enbale: true
+    enable: true
     state: restarted
 
 - name: Daemon reload

@@ -11,6 +11,13 @@
     state: directory
     mode: '0755'
 
+- name: Create docker directory
+  ansible.builtin.file:
+    path: /opt/bastion/docker/{{ item.name }}
+    state: directory
+    mode: '0755'
+  with_items: "{{ user_list }}"
+
 - name: Create sshpiper directory
   ansible.builtin.file:
     path: /opt/bastion/sshpiper
@@ -20,7 +27,7 @@
 - name: Copy docker file
   ansible.builtin.template:
     src: "{{ item }}"
-    dest: /opt/bastion/docker/{{ item }}
+    dest: /opt/bastion/docker/{{ item | basename }}
     owner: root
     group: root
     mode: '0644'
@@ -34,12 +41,20 @@
   community.crypto.openssh_keypair:
     path: /opt/bastion/sshpiper/id_rsa
 
-
+- name: Copy docker bastion systemd file
+  ansible.builtin.template:
+    src: "bastion.service.j2"
+    dest: /etc/systemd/system/docker-compose.service
+    owner: root
+    group: root
+    mode: '0644'
+  notify:
+    - Daemon reload
 
 - name: Copy docker bastion
   ansible.builtin.template:
     src: "bastion-compose.j2"
-    dest: /opt/bastion/docker/{{ item.name }}
+    dest: /opt/bastion/docker/{{ item.name }}/docker-compose.yml
     owner: root
     group: root
     mode: '0644'
@@ -51,7 +66,7 @@
 - name: Copy docker sshpiper
   ansible.builtin.template:
     src: "sshpiper-compose.j2"
-    dest: /opt/bastion/docker/sshpiper
+    dest: /opt/bastion/docker/sshpiper/docker-compose.yml
     owner: root
     group: root
     mode: '0644'
@@ -61,7 +76,7 @@
 
 - name: Copy sshpiper config
   ansible.builtin.template:
-    src: "ssh-piper-config.yaml.j2"
+    src: "sshpiper-config.yaml.j2"
     dest: /opt/bastion/sshpiper/sshpiper.yaml
     owner: root
     group: root
@@ -69,13 +84,3 @@
   notify:
     - Restart sshpiper
   tags: adduser
-
-- name: Copy docker bastion systemd file
-  ansible.builtin.template:
-    src: "bastion.service.j2"
-    dest: /etc/systemd/system/docker-compose.service
-    owner: root
-    group: root
-    mode: '0644'
-  notify:
-    - Daemon reload

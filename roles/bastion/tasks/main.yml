@@ -1,0 +1,6 @@
+---
+- name: Bastion tasks
+  include_tasks: bastion.yml
+  tags:
+    - adduser
+    - update-docker

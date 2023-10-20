@@ -2,14 +2,17 @@
 - name: Restart unit
   ansible.builtin.systemd:
     name: "docker-compose@{{ item.name }}"
-    enable: true
+    enabled: true
     state: restarted
+    daemon_reload: true
+    with_items: service.result
 
 - name: Restart sshpiper
   ansible.builtin.systemd:
     name: docker-compose@sshpiper
-    enable: true
+    enabled: true
     state: restarted
+    daemon_reload: true
 
 - name: Daemon reload
   ansible.builtin.systemd:

@@ -22,14 +22,6 @@
   with_items: "{{ admin_list.name }}"
   tags: addadmin
 
-- name: Generate keys files
-  deleguate_to: localhost
-  copy:
-    dest: "roles/system/files/{{ item.name }}.pub"
-    content: |-
-      {{ item.key }}
-  with_items: "{{ admin_list }}"
-
 - name: Add authorized keys
   ansible.posix.authorized_key:
     user: "{{ item }}"

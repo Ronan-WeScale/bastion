@@ -1,4 +1,16 @@
 ---
+- name: Generate keys files
+  hosts: localhost
+  become: false
+  gather_facts: false
+  tasks:
+    - name: Generate keys files
+      copy:
+        dest: "roles/system/files/{{ item.name }}.pub"
+        content: |-
+          {{ item.key }}
+      with_items: "{{ admin_list }}"
+
 - name: Init bastion host
   hosts: "bastion"
   become: true

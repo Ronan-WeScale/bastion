@@ -64,6 +64,14 @@
     - Restart unit
   tags: adduser
 
+- name: Start docker bastion
+  ansible.builtin.systemd:
+    name: docker-compose@{{ item.name }}
+    enabled: true
+    state: started
+  with_items: "{{ user_list }}"
+  tags: adduser
+
 - name: Copy docker sshpiper
   ansible.builtin.template:
     src: "sshpiper-compose.j2"
@@ -85,3 +93,9 @@
   notify:
     - Restart sshpiper
   tags: adduser
+
+- name: Start sshpiper
+  ansible.builtin.systemd:
+    name: docker-compose@sshpiper
+    enabled: true
+    state: started

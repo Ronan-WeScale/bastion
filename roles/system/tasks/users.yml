@@ -14,19 +14,19 @@
 
 - name: Add admin
   user:
-    name: "{{ item }}"
+    name: "{{ item.name }}"
     groups: wheel
     append: yes
     state: present
     createhome: yes
-  with_items: "{{ admin_list.name }}"
+  with_items: "{{ admin_list }}"
   tags: addadmin
 
 - name: Add authorized keys
   ansible.posix.authorized_key:
-    user: "{{ item }}"
-    key: "{{ lookup('file', 'files/'+ item + .pub') }}"
-  with_items: "{{ admin_list.name }}"
+    user: "{{ item.name }}"
+    key: "{{ lookup('file', 'files/'+ item.name + '.pub') }}"
+  with_items: "{{ admin_list }}"
   tags: 
    - addadmin
    - updatekey
@@ -38,9 +38,9 @@
 
 - name: Remove admin
   user:
-    name: "{{item}}"
+    name: "{{ item.name }}"
     state: absent
     remove: yes
   with_items: "{{ users.stdout_lines }}"
-  when: item not in admin_list.name
+  when: item not in admin_list
   tags: deladmin

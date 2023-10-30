@@ -1,16 +1,18 @@
 ---
-- name: Install pre-reqs for Docker and Ansible
-  apt: name={{ item }} state=latest update_cache=yes
-  loop: [ 'apt-transport-https', 'ca-certificates', 'curl', 'software-properties-common', 'python3-pip', 'virtualenv', 'python3-setuptools']
-
 - name: Add the GPG key for Docker
-  shell: 'curl -fsSL https://download.docker.com/linux/debian/gpg | gpg --dearmor -o /usr/share/keyrings/docker-archive-keyring.gpg'
+  apt_key:
+    url: https://download.docker.com/linux/debian/gpg
+    state: present
 
 - name: Add the repository to fetch the docker package
-  shell: 'echo "deb [arch=amd64 signed-by=/usr/share/keyrings/docker-archive-keyring.gpg] https://download.docker.com/linux/debian bullseye stable" | tee /etc/apt/sources.list.d/docker.list'
+  apt_repository: 
+    repo: deb https://download.docker.com/linux/debian bullseye stable
+    state: present
 
 - name: Update source list and then install docker
-  apt: update_cache=yes name=docker-ce state=latest
+  apt: 
+    name: docker-ce 
+    state: present
 
 - name: Configure Docker
   ansible.builtin.template:
@@ -23,7 +25,7 @@
     - Restart docker
 
 - name: Ensure docker is running
-  ansible.builtin.service:
+  ansible.builtin.systemd:
     name: docker
     enabled: true
     state: started

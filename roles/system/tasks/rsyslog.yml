@@ -15,7 +15,7 @@
     - Restart rsyslog
 
 - name: Ensure rsyslog is running
-  ansible.builtin.service:
+  ansible.builtin.systemd:
     name: rsyslog
     enabled: true
     state: started

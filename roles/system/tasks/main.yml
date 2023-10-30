@@ -1,4 +1,9 @@
 ---
+- name: Install prerequis
+  apt: 
+    name: apt-transport-https
+    state: present
+
 - name: User tasks
   include_tasks: users.yml
   tags: 

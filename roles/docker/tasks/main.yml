@@ -1,8 +1,7 @@
 ---
 - name: Add the GPG key for Docker
-  environment: "{{ environment_vars  | | default([]) }}"
   apt_key:
-    url: https://download.docker.com/linux/debian/gpg
+    data: "{{ lookup('url', 'https://download.docker.com/linux/debian/gpg', split_lines=False) }}"
     state: present
 
 - name: Add the repository to fetch the docker package

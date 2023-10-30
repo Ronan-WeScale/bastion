@@ -42,5 +42,5 @@
     state: absent
     remove: yes
   with_items: "{{ users.stdout_lines }}"
-  when: item not in admin_list
+  when: item not in "{{ admin_list }}"
   tags: deladmin

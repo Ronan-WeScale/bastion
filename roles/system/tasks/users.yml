@@ -32,7 +32,7 @@
    - updatekey
 
 - name: Retreive users
-  shell: "getent passwd | awk -F: '{size=$3; if((size>=1000)&&(size<=2000)) {print $1}}'"
+  shell: "getent passwd | awk -F: '{size=$3; if((size>=1000)&&(size<=2000)) {print $1}}' | grep -v debian"
   register: users
   tags: deladmin
 

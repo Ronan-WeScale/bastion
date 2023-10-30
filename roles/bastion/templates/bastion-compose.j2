@@ -1,7 +1,8 @@
 version: '3.5'
 services:
   bastion-{{ item.name }}:
-    build: .
+    build: 
+      context: ../.
     environment:
       USERS: "{{ item.name }}"
     ports:
@@ -12,3 +13,5 @@ services:
       - /opt/bastion/sshpiper/id_rsa.pub:/etc/authorized-keys:ro
 volumes:
   bastion-{{ item.name }}:
+    driver_opts:
+      o: "size=10G"

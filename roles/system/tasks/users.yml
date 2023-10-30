@@ -38,7 +38,7 @@
 
 - name: Remove admin
   user:
-    name: "{{ item.name }}"
+    name: "{{ item }}"
     state: absent
     remove: yes
   with_items: "{{ users.stdout_lines }}"

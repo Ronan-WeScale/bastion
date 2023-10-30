@@ -39,8 +39,9 @@
 
 - name: Copy proxy file
   ansible.builtin.copy:
-    remote_src: /etc/apt/apt.conf.d/01proxy
+    src: /etc/apt/apt.conf.d/01proxy
     dest: /opt/bastion/docker/01proxy
+    remote_src: true
 
 - name: Generate an OpenSSH keypair
   community.crypto.openssh_keypair:

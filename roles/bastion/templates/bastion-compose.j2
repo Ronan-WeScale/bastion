@@ -13,5 +13,3 @@ services:
       - /opt/bastion/sshpiper/id_rsa.pub:/etc/authorized-keys:ro
 volumes:
   bastion-{{ item.name }}:
-    driver_opts:
-      o: "size=10G"

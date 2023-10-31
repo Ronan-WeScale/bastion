@@ -2,5 +2,9 @@
 - name: Bastion tasks
   include_tasks: bastion.yml
   tags:
-    - adduser
     - update-docker
+
+- name: Users tasks
+  include_tasks: users.yml
+  tags:
+    - adduser

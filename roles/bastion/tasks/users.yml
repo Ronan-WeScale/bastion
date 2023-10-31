@@ -1,0 +1,40 @@
+---
+- name: Create docker directory
+  ansible.builtin.file:
+    path: /opt/bastion/docker/{{ item.name }}
+    state: directory
+    mode: '0755'
+  with_items: "{{ user_list }}"
+  tags: adduser
+
+- name: Copy docker bastion
+  ansible.builtin.template:
+    src: "bastion-compose.j2"
+    dest: /opt/bastion/docker/{{ item.name }}/docker-compose.yml
+    owner: root
+    group: root
+    mode: '0644'
+  with_items: "{{ user_list }}"
+  register: service
+  notify:
+    - Restart unit
+  tags: adduser
+
+- name: Start docker bastion
+  ansible.builtin.systemd:
+    name: docker-compose@{{ item.name }}
+    enabled: true
+    state: started
+  with_items: "{{ user_list }}"
+  tags: adduser
+
+- name: Copy sshpiper config
+  ansible.builtin.template:
+    src: "sshpiper-config.yaml.j2"
+    dest: /opt/bastion/sshpiper/sshpiper.yaml
+    owner: root
+    group: root
+    mode: '0644'
+  notify:
+    - Restart sshpiper
+  tags: adduser

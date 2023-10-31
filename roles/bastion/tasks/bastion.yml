@@ -6,6 +6,12 @@
     mode: '0755'
     recurse: true
 
+- name: Create sshpiper directory
+  ansible.builtin.file:
+    path: /opt/bastion/sshpiper
+    state: directory
+    mode: '0755'
+
 - name: Copy docker file
   ansible.builtin.template:
     src: "{{ item }}"

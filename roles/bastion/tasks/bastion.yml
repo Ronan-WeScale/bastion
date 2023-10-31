@@ -1,21 +1,10 @@
 ---
-- name: Create bastion directory
-  ansible.builtin.file:
-    path: /opt/bastion
-    state: directory
-    mode: '0755'
-
 - name: Create docker directory
   ansible.builtin.file:
-    path: /opt/bastion/docker
+    path: /opt/bastion/docker/sshpiper
     state: directory
     mode: '0755'
-
-- name: Create sshpiper directory
-  ansible.builtin.file:
-    path: /opt/bastion/sshpiper
-    state: directory
-    mode: '0755'
+    recurse: true
 
 - name: Copy docker file
   ansible.builtin.template:

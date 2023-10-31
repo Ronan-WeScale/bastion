@@ -58,9 +58,15 @@
 - name: Reconfigure sshd
   ansible.builtin.lineinfile:
     path: /etc/ssh/sshd_config
-    regexp: '^#ListenAddress 0.0.0.0'
+    regexp: '^#ListenAddress'
     line: ListenAddress {{ ansible_eth0.ipv4.address }}
-  notify: Restart sshd
+  register: update_sshd
+
+- name: Restart sshd
+  ansible.builtin.systemd:
+    name: sshd
+    state: restarted
+  when: update_sshd.changed
 
 - name: Start sshpiper
   ansible.builtin.systemd:

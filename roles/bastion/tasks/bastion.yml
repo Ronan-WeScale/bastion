@@ -33,7 +33,7 @@
     mode: '0644'
   with_fileglob:
     - "files/*.sh"
-    - "templates/Dockerfile.j2"
+    - "templates/Dockerfile"
   tags:
     - update-docker
 

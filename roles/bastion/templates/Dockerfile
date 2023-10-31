@@ -11,7 +11,7 @@ COPY ssh-user-auth.sh /usr/bin/ssh-user-auth.sh
 COPY bastion-shell.sh /usr/bin/bastion-shell.sh
 COPY entrypoint.sh /usr/bin/entrypoint.sh
 
-RUN env | grep -i _PROXY
+RUN env | grep -i _PROXY || echo "No proxy ENV"
 RUN apt-get -q update \
 	&& DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends \
 	   openssh-server net-tools telnet curl sudo \

@@ -5,16 +5,13 @@
     ],
     "storage-driver": "overlay2",
     "storage-opts": [
-        "overlay2.override_kernel_check=true",
         "overlay2.size=10G"
     ],
-    {% if proxy_conf is defined %}
+{% if proxy_conf is defined %}
     "proxies": {
-        "default": {
-          "httpProxy": "{{ proxy_conf.http }}",
-          "httpsProxy": "{{ proxy_conf.http }}",
-          "noProxy": "{{ proxy_conf.noProxy }}"
-        }
+        "http-proxy": "{{ proxy_conf.http }}",
+        "https-proxy": "{{ proxy_conf.http }}",
+        "no-proxy": "{{ proxy_conf.noProxy }}"
     }
-    {% endif %}
+{% endif %}
 }

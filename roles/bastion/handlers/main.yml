@@ -14,6 +14,11 @@
     state: restarted
     daemon_reload: true
 
+- name: Restart sshd
+  ansible.builtin.systemd:
+    name: sshd
+    state: restarted
+
 - name: Daemon reload
   ansible.builtin.systemd:
     daemon_reload: true

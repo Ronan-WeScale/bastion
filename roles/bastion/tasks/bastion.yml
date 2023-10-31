@@ -33,15 +33,15 @@
     mode: '0644'
   with_fileglob:
     - "files/*.sh"
-    - "files/Dockerfile"
+    - "templates/Dockerfile.j2"
   tags:
     - update-docker
 
 - name: Copy proxy file
-  ansible.builtin.copy:
-    src: /etc/apt/apt.conf.d/01proxy
+  ansible.builtin.template:
+    src: "01proxy.j2"
     dest: /opt/bastion/docker/01proxy
-    remote_src: true
+  when: proxy_conf is defined
 
 - name: Generate an OpenSSH keypair
   community.crypto.openssh_keypair:

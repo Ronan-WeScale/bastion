@@ -4,11 +4,14 @@ LABEL Author="Ronan Ducamp"
 
 ENV TERM=xterm-256color
 
+{% if proxy_conf is defined %}
 COPY 01proxy /etc/apt/apt.conf.d/01proxy
+{% endif %}
 COPY ssh-user-auth.sh /usr/bin/ssh-user-auth.sh
 COPY bastion-shell.sh /usr/bin/bastion-shell.sh
 COPY entrypoint.sh /usr/bin/entrypoint.sh
 
+RUN env | grep -i _PROXY
 RUN apt-get -q update \
 	&& DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends \
 	   openssh-server net-tools telnet curl sudo \

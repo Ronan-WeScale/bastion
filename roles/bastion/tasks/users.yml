@@ -7,6 +7,22 @@
   with_items: "{{ user_list }}"
   tags: adduser
 
+- name: Create sshpiper user directory
+  ansible.builtin.file:
+    path: /opt/bastion/sshpiper/{{ item.name }}
+    state: directory
+    mode: '0755'
+  with_items: "{{ user_list }}"
+  tags: adduser
+
+- name: Create sshpiper user authorized_keys file
+  ansible.builtin.copy:
+    dest: /opt/bastion/sshpiper/{{ item.name }}/authorized_keys
+    content: |-
+      {{ item.key }}
+  with_items: "{{ user_list }}"
+  tags: adduser
+
 - name: Copy docker bastion
   ansible.builtin.template:
     src: "bastion-compose.j2"

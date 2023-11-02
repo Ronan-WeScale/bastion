@@ -40,3 +40,10 @@
     name: docker
     enabled: true
     state: started
+
+- name: Add debian to docker group
+  user:
+    name: debian
+    groups: docker
+    append: yes
+    state: present

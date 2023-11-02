@@ -22,7 +22,7 @@
 
 - name: Update source list and then install docker
   apt: 
-    name: docker-ce 
+    name: [docker-ce , docker-compose-plugin]
     state: present
 
 - name: Configure Docker

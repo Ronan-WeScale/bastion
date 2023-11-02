@@ -11,7 +11,9 @@
   ansible.builtin.file:
     path: /opt/bastion/sshpiper/{{ item.name }}
     state: directory
-    mode: '0755'
+    mode: '0700'
+    owner: 1000
+    group: 1000
   with_items: "{{ user_list }}"
   tags: adduser
 
@@ -20,6 +22,8 @@
     dest: /opt/bastion/sshpiper/{{ item.name }}/authorized_keys
     content: |-
       {{ item.key }}
+    owner: 1000
+    group: 1000
   with_items: "{{ user_list }}"
   tags: adduser
 
@@ -48,8 +52,8 @@
   ansible.builtin.template:
     src: "sshpiper-config.yaml.j2"
     dest: /opt/bastion/sshpiper/sshpiper.yaml
-    owner: root
-    group: root
+    owner: 1000
+    group: 1000
     mode: '0644'
   notify:
     - Restart sshpiper

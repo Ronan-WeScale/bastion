@@ -34,6 +34,7 @@
 - name: Generate an OpenSSH keypair
   community.crypto.openssh_keypair:
     path: /opt/bastion/sshpiper/id_rsa
+    owner: 1000
 
 - name: Copy docker bastion systemd file
   ansible.builtin.template:

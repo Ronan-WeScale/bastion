@@ -4,6 +4,7 @@ services:
     image: farmer1992/sshpiperd:full-1.2.3
     environment:
       SSHPIPERD_YAML_CONFIG: "/var/sshpiper/sshpiper.yaml"
+      PLUGIN: "yaml"
     ports:
       - "22:2222"
     volumes:

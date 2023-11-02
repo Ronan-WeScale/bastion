@@ -10,6 +10,6 @@ services:
     volumes:
       - /var/log/bastion/{{ item.name }}:/var/log/bastion/{{ item.name }}
       - bastion-{{ item.name }}:/home/{{ item.name }}
-      - /opt/bastion/sshpiper/id_rsa.pub:/etc/authorized-keys:ro
+      - /opt/bastion/docker/{{ item.name }}/authorized_keys:/etc/authorized-keys:ro
 volumes:
   bastion-{{ item.name }}:

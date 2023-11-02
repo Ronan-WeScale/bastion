@@ -40,6 +40,21 @@
     - Restart unit
   tags: adduser
 
+- name: slurp pub key
+  slurp:
+    src: /opt/bastion/sshpiper/id_rsa.pub
+  register: slurp_remote_key
+
+- name: Create user authorized_keys file
+  ansible.builtin.copy:
+    dest: /opt/bastion/docker/{{ item.name }}/authorized_keys
+    content: |-
+      {{ item.name }}:{{ slurp_remote_key['content'] | b64decode }}
+    owner: 1000
+    group: 1000
+  with_items: "{{ user_list }}"
+  tags: adduser
+
 - name: Start docker bastion
   ansible.builtin.systemd:
     name: docker-compose@{{ item.name }}

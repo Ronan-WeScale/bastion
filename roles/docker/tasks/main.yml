@@ -9,6 +9,17 @@
     repo: deb https://download.docker.com/linux/debian bullseye stable
     state: present
 
+- name: Create docker directory
+  ansible.builtin.file:
+    path: /var/lib/docker
+    state: directory
+    mode: '0755'
+  run_once: true
+
+- name: Mount docker volume
+  shell: mount -a
+  run_once: true
+
 - name: Update source list and then install docker
   apt: 
     name: docker-ce 

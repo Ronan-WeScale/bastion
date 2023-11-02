@@ -5,6 +5,6 @@ services:
     environment:
       SSHPIPERD_YAML_CONFIG: "/var/sshpiper/sshpiper.yaml"
     ports:
-      - "{{ ansible_eth1.ipv4.address }}:22:2222"
+      - "22:2222"
     volumes:
       - /opt/bastion/sshpiper/:/var/sshpiper/

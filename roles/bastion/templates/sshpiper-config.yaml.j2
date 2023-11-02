@@ -5,7 +5,7 @@ pipes:
     - username: "{{ user.name }}"
       authorized_keys: /var/sshpiper/{{ user.name }}/authorized_keys
   to:
-    host: localhost:{{ user.port }}
+    host: {{ ansible_default_ipv4.address|default(ansible_all_ipv4_addresses[0]) }}:{{ user.port }}
     username: "{{ user.name }}"
     private_key: /var/sshpiper/id_rsa
     ignore_hostkey: true

@@ -7,6 +7,16 @@
   with_items: "{{ user_list }}"
   tags: adduser
 
+- name: Create log directory
+  ansible.builtin.file:
+    path: /var/log/bastion/{{ item.name }}
+    state: directory
+    mode: '0755'
+    owner: 1000
+    group: 1000
+  with_items: "{{ user_list }}"
+  tags: adduser
+
 - name: Create sshpiper user directory
   ansible.builtin.file:
     path: /opt/bastion/sshpiper/{{ item.name }}
@@ -69,7 +79,7 @@
     dest: /opt/bastion/sshpiper/sshpiper.yaml
     owner: 1000
     group: 1000
-    mode: '0644'
+    mode: '0600'
   notify:
     - Restart sshpiper
   tags: adduser

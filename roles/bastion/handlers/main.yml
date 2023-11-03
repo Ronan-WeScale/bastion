@@ -1,7 +1,7 @@
 ---
 - name: Restart unit
   ansible.builtin.systemd:
-    name: "docker-compose@{{ item.name }}"
+    name: "docker-compose@{{ item }}"
     enabled: true
     state: restarted
     daemon_reload: true

@@ -1,4 +1,17 @@
 ---
+- name: Check user list
+  ansible.builtin.find:
+    paths: /var/log/bastion/
+    recurse: no
+    file_type: directory
+  register: users
+  tags: adduser
+
+- name: Update user list
+  set_fact:
+    user_list: "{{ user_list | difference(users.files | basename) }}"
+  tags: adduser
+
 - name: Create docker directory
   ansible.builtin.file:
     path: /opt/bastion/docker/{{ item.name }}

@@ -45,6 +45,8 @@
     mode: '0644'
   notify:
     - Daemon reload
+  tags:
+    - update-docker
 
 - name: Copy docker sshpiper
   ansible.builtin.template:

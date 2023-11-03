@@ -48,3 +48,6 @@ new-user:
 
 new-admin:
 	ansible-playbook playbooks/00_system.yml -i inventory --tags="addadmin"
+
+update-bastion:
+    ansible-playbook playbooks/02_bastion.yml -i inventory --tags="update-bastion"

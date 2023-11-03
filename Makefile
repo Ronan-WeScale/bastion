@@ -22,7 +22,7 @@ prepare: ### Install workspace env dependencies
 	@ansible-galaxy role install -fr ${PWD}/requirements.yml
 
 system:
-	ansible-playbook playbooks/00_system.yml -i inventory --limit=$(name)
+	ansible-playbook playbooks/00_system.yml -i inventory --limit="localhost,$(name)"
 
 docker:
 	ansible-playbook playbooks/01_docker.yml -i inventory --limit=$(name)

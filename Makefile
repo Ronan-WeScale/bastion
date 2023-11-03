@@ -34,14 +34,14 @@ new: system docker bastion
 
 .PHONY: new-bastion
 new-bastion:
-	@ [ -n  "$(name)" ] && \
-	new || \
+	@ [ -n  "$(name)" ] || \
 	( \
 	echo ----------------------------------- BASTION HOST --------------------------------- && \
 	echo && \
 	echo "Usage:\n\tmake new-bastion name=HOSTNAME \n" && \
 	exit 1 \
 	)
+	make new
 
 new-user:
 	ansible-playbook playbooks/02_bastion.yml -i inventory --tags="adduser"

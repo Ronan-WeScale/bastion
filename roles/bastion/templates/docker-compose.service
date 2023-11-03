@@ -4,6 +4,9 @@ PartOf=docker.service
 After=docker.service
 
 [Service]
+{% if proxy_conf is defined %}
+Environment=DOCKER_BUILDKIT=0
+{% endif %}
 Type=oneshot
 RemainAfterExit=true
 WorkingDirectory=/opt/bastion/docker/%i

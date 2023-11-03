@@ -89,7 +89,9 @@
   register: service
   notify:
     - Restart unit
-  tags: adduser
+  tags: 
+    - adduser
+    - update-bastion
 
 - name: slurp pub key
   slurp:

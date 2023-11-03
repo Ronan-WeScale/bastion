@@ -21,10 +21,21 @@ prepare: ### Install workspace env dependencies
 	@ansible-galaxy collection install -fr ${PWD}/requirements.yml
 	@ansible-galaxy role install -fr ${PWD}/requirements.yml
 
+system:
+	ansible-playbook playbooks/00_system.yml -i inventory --limit=$(name)
+
+docker:
+	ansible-playbook playbooks/01_docker.yml -i inventory --limit=$(name)
+
+bastion:
+	ansible-playbook playbooks/02_bastion.yml -i inventory --limit=$(name)
+
+new: system docker bastion
+
 .PHONY: new-bastion
 new-bastion:
 	@ [ -n  "$(name)" ] && \
-	ansible-playbook playbooks/00_init_bastion.yml -i inventory --limit=$(name) || \
+	new || \
 	( \
 	echo ----------------------------------- BASTION HOST --------------------------------- && \
 	echo && \
@@ -33,7 +44,7 @@ new-bastion:
 	)
 
 new-user:
-	ansible-playbook playbooks/01_adduser.yml -i inventory
+	ansible-playbook playbooks/02_bastion.yml -i inventory --tags="adduser"
 
 new-admin:
-	ansible-playbook playbooks/99_addadmin.yml -i inventory
+	ansible-playbook playbooks/00_system.yml -i inventory --tags="addadmin"

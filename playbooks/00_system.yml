@@ -18,5 +18,3 @@
 
   roles:
     - system
-    - docker
-    - bastion

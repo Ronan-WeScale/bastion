@@ -1,8 +1,8 @@
 ---
-- name: Init bastion host
+- name: Init bastion docker
   hosts: "bastion"
   become: true
   gather_facts: true
-  tags: addadmin
+
   roles:
-    - system
+    - docker

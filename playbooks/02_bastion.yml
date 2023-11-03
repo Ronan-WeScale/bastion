@@ -1,8 +1,7 @@
 ---
-- name: Init bastion host
+- name: Config bastion
   hosts: "bastion"
   become: true
   gather_facts: true
-  tags: adduser
   roles:
     - bastion

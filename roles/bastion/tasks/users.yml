@@ -54,6 +54,7 @@
   slurp:
     src: /opt/bastion/sshpiper/id_rsa.pub
   register: slurp_remote_key
+  tags: adduser
 
 - name: Create user authorized_keys file
   ansible.builtin.copy:

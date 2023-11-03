@@ -5,6 +5,11 @@ services:
       context: ../.
     environment:
       USERS: "{{ item.name }}"
+{% if proxy_conf is defined %}
+      HTTP_PROXY: "{{ proxy_conf.http }}"
+      HTTPS_PROXY: "{{ proxy_conf.https }}"
+      NO_PROXY: "{{ proxy_conf.noProxy }}"
+{% endif %}
     ports:
       - "{{ item.port }}:22"
     volumes:

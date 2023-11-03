@@ -9,7 +9,4 @@ services:
       - "{{ item.port }}:22"
     volumes:
       - /var/log/bastion/{{ item.name }}:/var/log/bastion/{{ item.name }}
-      - bastion-{{ item.name }}:/home/{{ item.name }}
       - /opt/bastion/docker/{{ item.name }}/authorized_keys:/etc/authorized-keys:ro
-volumes:
-  bastion-{{ item.name }}:

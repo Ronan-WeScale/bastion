@@ -5,12 +5,29 @@
     recurse: no
     file_type: directory
   register: users
-  tags: adduser
+  tags: 
+    - adduser
+    - never
+
+- name: User list OK
+  no_log: true
+  vars:
+    userok: []
+  set_fact:
+    userok: "{{ userok + [item.path | basename] }}"
+  with_items: "{{ users.files }}"
+  tags: 
+    - adduser
+    - never
 
 - name: Update user list
+  no_log: true
   set_fact:
-    user_list: "{{ user_list | difference(users.files | basename) }}"
-  tags: adduser
+    user_list: "{{ user_list | reject('search', item) }}"
+  with_items: "{{ userok }}"
+  tags: 
+    - adduser
+    - never
 
 - name: Create docker directory
   ansible.builtin.file:

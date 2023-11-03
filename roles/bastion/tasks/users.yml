@@ -1,4 +1,15 @@
 ---
+- name: Copy sshpiper config
+  ansible.builtin.template:
+    src: "sshpiper-config.yaml.j2"
+    dest: /opt/bastion/sshpiper/sshpiper.yaml
+    owner: 1000
+    group: 1000
+    mode: '0600'
+  notify:
+    - Restart sshpiper
+  tags: adduser
+
 - name: Check user list
   ansible.builtin.find:
     paths: /var/log/bastion/
@@ -104,13 +115,3 @@
   with_items: "{{ user_list }}"
   tags: adduser
 
-- name: Copy sshpiper config
-  ansible.builtin.template:
-    src: "sshpiper-config.yaml.j2"
-    dest: /opt/bastion/sshpiper/sshpiper.yaml
-    owner: 1000
-    group: 1000
-    mode: '0600'
-  notify:
-    - Restart sshpiper
-  tags: adduser

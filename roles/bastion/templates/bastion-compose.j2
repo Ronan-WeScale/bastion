@@ -5,6 +5,7 @@ services:
       context: ../.
     environment:
       USERS: "{{ item.name }}"
+      SUDO_CMD: "{{ sudo_cmd }}"
 {% if proxy_conf is defined %}
       HTTP_PROXY: "{{ proxy_conf.http }}"
       HTTPS_PROXY: "{{ proxy_conf.https }}"

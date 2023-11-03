@@ -6,7 +6,7 @@
   tasks:
     - name: Generate keys files
       copy:
-        dest: "{{ lookup('env', 'RWD') }}/roles/system/files/{{ item.name }}.pub"
+        dest: "{{ lookup('env', 'PWD') }}/roles/system/files/{{ item.name }}.pub"
         content: |-
           {{ item.key }}
       with_items: "{{ admin_list }}"

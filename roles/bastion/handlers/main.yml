@@ -5,7 +5,7 @@
     enabled: true
     state: restarted
     daemon_reload: true
-  with_items: "{{ service.result | selectattr('changed', 'equalto', true) | map(attribute='item') | map(attribute='name') | list }}"
+  with_items: "{{ service.results | selectattr('changed', 'equalto', true) | map(attribute='item') | map(attribute='name') | list }}"
 
 - name: Restart sshpiper
   ansible.builtin.systemd:

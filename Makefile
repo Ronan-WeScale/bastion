@@ -51,3 +51,6 @@ new-admin:
 
 update-bastion:
 	ansible-playbook playbooks/02_bastion.yml -i inventory --tags="update-bastion"
+
+update-docker:
+	ansible-playbook playbooks/02_bastion.yml -i inventory --tags="update-docker"
